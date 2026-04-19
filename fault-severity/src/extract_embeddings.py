@@ -16,7 +16,7 @@ Output files:
   embeddings/{model_key}_test_metrics.npy       shape: (N_test,  10)
   embeddings/{model_key}_test_labels.npy        shape: (N_test,)
 
-These are combined downstream in train_ml_models.py as:
+These are combined downstream in train_unixcoder_classical.py as:
   X = [embedding (768-d)] + [metrics (10-d)]  →  778-d feature vector
 """
 
@@ -226,7 +226,7 @@ def main(model_keys):
 
     print(f"\n{'='*60}")
     print("All embeddings extracted.")
-    print("Next step: python src/train_ml_models.py")
+    print("Next step: python src/train_unixcoder_classical.py")
     print(f"{'='*60}")
 
 
