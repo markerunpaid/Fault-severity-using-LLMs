@@ -66,11 +66,6 @@ data/train_with_metrics.csv
 data/train_smote.csv
 !data/.gitkeep
 
-# Results and outputs
-results/
-*.json
-!results/.gitkeep
-
 # Logs
 logs/
 *.log
