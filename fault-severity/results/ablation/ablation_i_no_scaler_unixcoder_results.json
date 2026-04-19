@@ -1,0 +1,56 @@
+{
+  "ablation": "i_no_scaler",
+  "description": "No RobustScaler; SMOTE on raw metrics; LLM embeddings + metrics",
+  "model": "unixcoder",
+  "model_name": "microsoft/unixcoder-base",
+  "Accuracy": 0.722,
+  "Macro F1": 0.5305,
+  "Weighted F1": 0.672,
+  "MCC": 0.4462,
+  "G-Mean": 0.2629,
+  "Precision (Macro)": 0.7793,
+  "Recall (Macro)": 0.5392,
+  "ROC-AUC (Macro)": 0.7893,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 699.1091,
+      "val_macro_f1": 0.213
+    },
+    {
+      "epoch": 2,
+      "train_loss": 228.6957,
+      "val_macro_f1": 0.2289
+    },
+    {
+      "epoch": 3,
+      "train_loss": 40.665,
+      "val_macro_f1": 0.4093
+    },
+    {
+      "epoch": 4,
+      "train_loss": 1.8013,
+      "val_macro_f1": 0.5175
+    },
+    {
+      "epoch": 5,
+      "train_loss": 1.5276,
+      "val_macro_f1": 0.4684
+    },
+    {
+      "epoch": 6,
+      "train_loss": 1.4063,
+      "val_macro_f1": 0.454
+    },
+    {
+      "epoch": 7,
+      "train_loss": 1.2735,
+      "val_macro_f1": 0.5161
+    },
+    {
+      "epoch": 8,
+      "train_loss": 1.0788,
+      "val_macro_f1": 0.5305
+    }
+  ]
+}

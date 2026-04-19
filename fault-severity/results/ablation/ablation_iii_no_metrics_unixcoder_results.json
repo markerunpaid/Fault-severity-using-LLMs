@@ -1,0 +1,56 @@
+{
+  "ablation": "iii_no_metrics",
+  "description": "RobustScaler \u2713 + SMOTE \u2713; code metrics REMOVED; LLM embeddings only (768-d)",
+  "model": "unixcoder",
+  "model_name": "microsoft/unixcoder-base",
+  "Accuracy": 0.8072,
+  "Macro F1": 0.7471,
+  "Weighted F1": 0.7967,
+  "MCC": 0.6361,
+  "G-Mean": 0.6903,
+  "Precision (Macro)": 0.7923,
+  "Recall (Macro)": 0.7206,
+  "ROC-AUC (Macro)": 0.8795,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.041,
+      "val_macro_f1": 0.5827
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.8524,
+      "val_macro_f1": 0.6329
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.6968,
+      "val_macro_f1": 0.7333
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.5845,
+      "val_macro_f1": 0.7322
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.5374,
+      "val_macro_f1": 0.728
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.5084,
+      "val_macro_f1": 0.7471
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.4884,
+      "val_macro_f1": 0.7406
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.478,
+      "val_macro_f1": 0.7383
+    }
+  ]
+}

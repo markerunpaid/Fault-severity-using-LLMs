@@ -1,0 +1,59 @@
+{
+  "model": "unixcoder_smote",
+  "model_name": "microsoft/unixcoder-base",
+  "Accuracy": 0.7818,
+  "Macro F1": 0.7319,
+  "Weighted F1": 0.7721,
+  "MCC": 0.5867,
+  "G-Mean": 0.6742,
+  "used_params": {
+    "learning_rate": 5.371004924854035e-05,
+    "weight_decay": 1.6536937182824424e-05,
+    "warmup_ratio": 0.08418523990223437,
+    "dropout": 0.28948155927925495,
+    "epochs": 8,
+    "accumulation_steps": 4
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.0598,
+      "val_macro_f1": 0.6239
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.8435,
+      "val_macro_f1": 0.5984
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.7014,
+      "val_macro_f1": 0.72
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.5873,
+      "val_macro_f1": 0.7276
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.541,
+      "val_macro_f1": 0.6956
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.5102,
+      "val_macro_f1": 0.7319
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.4921,
+      "val_macro_f1": 0.7263
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.4817,
+      "val_macro_f1": 0.7267
+    }
+  ]
+}

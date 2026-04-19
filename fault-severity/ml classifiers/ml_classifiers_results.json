@@ -1,0 +1,98 @@
+{
+  "xgboost": {
+    "model": "XGBoost",
+    "accuracy": 0.7907,
+    "macro_f1": 0.7267,
+    "weighted_f1": 0.7852,
+    "mcc": 0.6087,
+    "g_mean": 0.675,
+    "roc_auc_macro": 0.8658,
+    "per_class_f1": {
+      "Critical(0)": 0.5053,
+      "Major(1)": 0.8542,
+      "Medium(2)": 0.9107,
+      "Low(3)": 0.6367
+    },
+    "best_params": {
+      "n_estimators": 762,
+      "max_depth": 8,
+      "learning_rate": 0.028477486830279865,
+      "subsample": 0.9661451709558935,
+      "colsample_bytree": 0.7606700059313507,
+      "min_child_weight": 7,
+      "gamma": 0.0757211855137844,
+      "reg_alpha": 0.00407745022049304,
+      "reg_lambda": 0.00136436567228164
+    }
+  },
+  "catboost": {
+    "model": "CatBoost",
+    "accuracy": 0.7788,
+    "macro_f1": 0.7115,
+    "weighted_f1": 0.7736,
+    "mcc": 0.5873,
+    "g_mean": 0.6565,
+    "roc_auc_macro": 0.8655,
+    "per_class_f1": {
+      "Critical(0)": 0.4731,
+      "Major(1)": 0.8442,
+      "Medium(2)": 0.9009,
+      "Low(3)": 0.6277
+    },
+    "best_params": {
+      "iterations": 551,
+      "depth": 8,
+      "learning_rate": 0.21627962026307676,
+      "l2_leaf_reg": 9.931499731827092,
+      "border_count": 243,
+      "bagging_temperature": 0.6849650604959754,
+      "random_strength": 2.7647309331197976
+    }
+  },
+  "lightgbm": {
+    "model": "LightGBM",
+    "accuracy": 0.7788,
+    "macro_f1": 0.7202,
+    "weighted_f1": 0.7754,
+    "mcc": 0.5897,
+    "g_mean": 0.6764,
+    "roc_auc_macro": 0.8666,
+    "per_class_f1": {
+      "Critical(0)": 0.5102,
+      "Major(1)": 0.8421,
+      "Medium(2)": 0.9009,
+      "Low(3)": 0.6277
+    },
+    "best_params": {
+      "n_estimators": 697,
+      "num_leaves": 231,
+      "max_depth": 13,
+      "learning_rate": 0.13802702819546328,
+      "min_child_samples": 67,
+      "subsample": 0.5244164304085682,
+      "colsample_bytree": 0.6602808230764377,
+      "reg_alpha": 8.237200307830006e-08,
+      "reg_lambda": 0.007028551374196509
+    }
+  },
+  "svm": {
+    "model": "SVM",
+    "accuracy": 0.7892,
+    "macro_f1": 0.7264,
+    "weighted_f1": 0.7852,
+    "mcc": 0.6099,
+    "g_mean": 0.6854,
+    "roc_auc_macro": 0.8692,
+    "per_class_f1": {
+      "Critical(0)": 0.5,
+      "Major(1)": 0.8538,
+      "Medium(2)": 0.9123,
+      "Low(3)": 0.6394
+    },
+    "best_params": {
+      "kernel": "rbf",
+      "C": 23.52339012183031,
+      "gamma": "scale"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "ablation": "iv_source_code_only",
+  "description": "Source code ONLY \u2192 LLM \u2192 Linear(768,4). No metrics, scaler, or SMOTE. Mashhadi et al. RQ2.",
+  "model": "unixcoder",
+  "model_name": "microsoft/unixcoder-base",
+  "Accuracy": 0.7892,
+  "Macro F1": 0.7268,
+  "Weighted F1": 0.7771,
+  "MCC": 0.5992,
+  "G-Mean": 0.659,
+  "Precision (Macro)": 0.7807,
+  "Recall (Macro)": 0.6968,
+  "ROC-AUC (Macro)": 0.8917,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.9298,
+      "val_macro_f1": 0.5553
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.6279,
+      "val_macro_f1": 0.6391
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.3776,
+      "val_macro_f1": 0.7063
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.2234,
+      "val_macro_f1": 0.7107
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.1342,
+      "val_macro_f1": 0.7222
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.0854,
+      "val_macro_f1": 0.7188
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.0632,
+      "val_macro_f1": 0.7268
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.0305,
+      "val_macro_f1": 0.7258
+    }
+  ]
+}

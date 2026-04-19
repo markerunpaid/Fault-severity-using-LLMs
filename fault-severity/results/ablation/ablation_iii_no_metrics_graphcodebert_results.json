@@ -1,0 +1,56 @@
+{
+  "ablation": "iii_no_metrics",
+  "description": "RobustScaler \u2713 + SMOTE \u2713; code metrics REMOVED; LLM embeddings only (768-d)",
+  "model": "graphcodebert",
+  "model_name": "microsoft/graphcodebert-base",
+  "Accuracy": 0.7683,
+  "Macro F1": 0.7276,
+  "Weighted F1": 0.7659,
+  "MCC": 0.5745,
+  "G-Mean": 0.6956,
+  "Precision (Macro)": 0.7439,
+  "Recall (Macro)": 0.7152,
+  "ROC-AUC (Macro)": 0.8771,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.0595,
+      "val_macro_f1": 0.4293
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.9031,
+      "val_macro_f1": 0.5704
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.7474,
+      "val_macro_f1": 0.6907
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.6388,
+      "val_macro_f1": 0.6788
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.5668,
+      "val_macro_f1": 0.7242
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.5171,
+      "val_macro_f1": 0.7137
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.4961,
+      "val_macro_f1": 0.7093
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.4834,
+      "val_macro_f1": 0.7276
+    }
+  ]
+}

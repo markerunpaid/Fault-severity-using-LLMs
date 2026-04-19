@@ -1,0 +1,48 @@
+{
+  "model": "graphcodebert",
+  "model_name": "microsoft/graphcodebert-base",
+  "Accuracy": 0.7683,
+  "Macro F1": 0.718,
+  "Weighted F1": 0.7614,
+  "MCC": 0.569,
+  "G-Mean": 0.6792,
+  "best_params": {
+    "learning_rate": 7.928758212088177e-05,
+    "weight_decay": 0.00029499719873019855,
+    "warmup_ratio": 0.14522901132382177,
+    "dropout": 0.327789944814619,
+    "epochs": 6
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.0312,
+      "val_macro_f1": 0.4334
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.7092,
+      "val_macro_f1": 0.6379
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.4222,
+      "val_macro_f1": 0.6872
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.2394,
+      "val_macro_f1": 0.6864
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.1309,
+      "val_macro_f1": 0.712
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.0709,
+      "val_macro_f1": 0.718
+    }
+  ]
+}

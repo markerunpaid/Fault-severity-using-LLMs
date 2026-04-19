@@ -1,0 +1,59 @@
+{
+  "model": "graphcodebert_smote",
+  "model_name": "microsoft/graphcodebert-base",
+  "Accuracy": 0.7728,
+  "Macro F1": 0.7291,
+  "Weighted F1": 0.7687,
+  "MCC": 0.5802,
+  "G-Mean": 0.6925,
+  "used_params": {
+    "learning_rate": 7.928758212088177e-05,
+    "weight_decay": 0.00029499719873019855,
+    "warmup_ratio": 0.14522901132382177,
+    "dropout": 0.327789944814619,
+    "epochs": 8,
+    "accumulation_steps": 4
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.0686,
+      "val_macro_f1": 0.503
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.9148,
+      "val_macro_f1": 0.62
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.7536,
+      "val_macro_f1": 0.699
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.6283,
+      "val_macro_f1": 0.6958
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.5668,
+      "val_macro_f1": 0.7026
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.5229,
+      "val_macro_f1": 0.7221
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.4938,
+      "val_macro_f1": 0.718
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.4826,
+      "val_macro_f1": 0.7291
+    }
+  ]
+}

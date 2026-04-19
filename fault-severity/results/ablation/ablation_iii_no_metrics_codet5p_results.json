@@ -1,0 +1,56 @@
+{
+  "ablation": "iii_no_metrics",
+  "description": "RobustScaler \u2713 + SMOTE \u2713; code metrics REMOVED; LLM embeddings only (768-d)",
+  "model": "codet5p",
+  "model_name": "Salesforce/codet5p-110m-embedding",
+  "Accuracy": 0.7907,
+  "Macro F1": 0.7231,
+  "Weighted F1": 0.7799,
+  "MCC": 0.6038,
+  "G-Mean": 0.6538,
+  "Precision (Macro)": 0.7713,
+  "Recall (Macro)": 0.6976,
+  "ROC-AUC (Macro)": 0.8466,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.0608,
+      "val_macro_f1": 0.5261
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.8557,
+      "val_macro_f1": 0.6549
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.7046,
+      "val_macro_f1": 0.6848
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.6136,
+      "val_macro_f1": 0.7112
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.5496,
+      "val_macro_f1": 0.7231
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.5222,
+      "val_macro_f1": 0.7139
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.5001,
+      "val_macro_f1": 0.7093
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.4876,
+      "val_macro_f1": 0.7115
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "model": "codebert_smote",
+  "model_name": "microsoft/codebert-base",
+  "Accuracy": 0.7758,
+  "Macro F1": 0.7144,
+  "Weighted F1": 0.7701,
+  "MCC": 0.5816,
+  "G-Mean": 0.673,
+  "used_params": {
+    "learning_rate": 4.404220810269438e-05,
+    "weight_decay": 0.0002501181112418235,
+    "warmup_ratio": 0.2968821991330362,
+    "dropout": 0.08416125758393399,
+    "epochs": 8,
+    "accumulation_steps": 4
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.1534,
+      "val_macro_f1": 0.3887
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.9578,
+      "val_macro_f1": 0.5629
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.8496,
+      "val_macro_f1": 0.6499
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.7137,
+      "val_macro_f1": 0.66
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.6036,
+      "val_macro_f1": 0.6966
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.5507,
+      "val_macro_f1": 0.7144
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.5163,
+      "val_macro_f1": 0.7036
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.4919,
+      "val_macro_f1": 0.7017
+    }
+  ]
+}

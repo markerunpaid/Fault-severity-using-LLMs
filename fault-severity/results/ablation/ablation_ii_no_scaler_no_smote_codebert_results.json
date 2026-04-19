@@ -1,0 +1,56 @@
+{
+  "ablation": "ii_no_scaler_no_smote",
+  "description": "No RobustScaler + No SMOTE; raw imbalanced metrics; LLM embeddings + metrics",
+  "model": "codebert",
+  "model_name": "microsoft/codebert-base",
+  "Accuracy": 0.6143,
+  "Macro F1": 0.2085,
+  "Weighted F1": 0.4861,
+  "MCC": 0.0194,
+  "G-Mean": 0.0713,
+  "Precision (Macro)": 0.2813,
+  "Recall (Macro)": 0.2537,
+  "ROC-AUC (Macro)": 0.493,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 410.9497,
+      "val_macro_f1": 0.1362
+    },
+    {
+      "epoch": 2,
+      "train_loss": 276.3772,
+      "val_macro_f1": 0.1772
+    },
+    {
+      "epoch": 3,
+      "train_loss": 72.4701,
+      "val_macro_f1": 0.1913
+    },
+    {
+      "epoch": 4,
+      "train_loss": 33.548,
+      "val_macro_f1": 0.2013
+    },
+    {
+      "epoch": 5,
+      "train_loss": 19.4779,
+      "val_macro_f1": 0.1953
+    },
+    {
+      "epoch": 6,
+      "train_loss": 12.2178,
+      "val_macro_f1": 0.2074
+    },
+    {
+      "epoch": 7,
+      "train_loss": 6.7982,
+      "val_macro_f1": 0.1942
+    },
+    {
+      "epoch": 8,
+      "train_loss": 4.0045,
+      "val_macro_f1": 0.2085
+    }
+  ]
+}

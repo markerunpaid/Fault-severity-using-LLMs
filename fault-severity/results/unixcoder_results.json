@@ -1,0 +1,43 @@
+{
+  "model": "unixcoder",
+  "model_name": "microsoft/unixcoder-base",
+  "Accuracy": 0.7907,
+  "Macro F1": 0.7272,
+  "Weighted F1": 0.7841,
+  "MCC": 0.6077,
+  "G-Mean": 0.6808,
+  "best_params": {
+    "learning_rate": 5.371004924854035e-05,
+    "weight_decay": 1.6536937182824424e-05,
+    "warmup_ratio": 0.08418523990223437,
+    "dropout": 0.28948155927925495,
+    "epochs": 5
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.907,
+      "val_macro_f1": 0.5683
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.6048,
+      "val_macro_f1": 0.6797
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.3368,
+      "val_macro_f1": 0.6773
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.186,
+      "val_macro_f1": 0.7158
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.0971,
+      "val_macro_f1": 0.7272
+    }
+  ]
+}

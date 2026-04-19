@@ -1,0 +1,58 @@
+{
+  "model": "codet5p",
+  "model_name": "Salesforce/codet5p-110m-embedding",
+  "Accuracy": 0.7593,
+  "Macro F1": 0.698,
+  "Weighted F1": 0.7509,
+  "MCC": 0.5466,
+  "G-Mean": 0.6398,
+  "best_params": {
+    "learning_rate": 4.8030133858163695e-05,
+    "weight_decay": 2.3360213139915578e-05,
+    "warmup_ratio": 0.10463821699577333,
+    "dropout": 0.31101859897600825,
+    "epochs": 8
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.9883,
+      "val_macro_f1": 0.4822
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.7033,
+      "val_macro_f1": 0.6349
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.4729,
+      "val_macro_f1": 0.6843
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.286,
+      "val_macro_f1": 0.6921
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.1825,
+      "val_macro_f1": 0.6951
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.1382,
+      "val_macro_f1": 0.6889
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.0975,
+      "val_macro_f1": 0.698
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.0731,
+      "val_macro_f1": 0.6957
+    }
+  ]
+}

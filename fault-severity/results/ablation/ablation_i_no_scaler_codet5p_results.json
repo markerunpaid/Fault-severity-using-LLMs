@@ -1,0 +1,56 @@
+{
+  "ablation": "i_no_scaler",
+  "description": "No RobustScaler; SMOTE on raw metrics; LLM embeddings + metrics",
+  "model": "codet5p",
+  "model_name": "Salesforce/codet5p-110m-embedding",
+  "Accuracy": 0.5531,
+  "Macro F1": 0.2931,
+  "Weighted F1": 0.5149,
+  "MCC": 0.087,
+  "G-Mean": 0.1431,
+  "Precision (Macro)": 0.3234,
+  "Recall (Macro)": 0.296,
+  "ROC-AUC (Macro)": 0.6619,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 702.1635,
+      "val_macro_f1": 0.1331
+    },
+    {
+      "epoch": 2,
+      "train_loss": 268.8454,
+      "val_macro_f1": 0.227
+    },
+    {
+      "epoch": 3,
+      "train_loss": 54.2104,
+      "val_macro_f1": 0.2075
+    },
+    {
+      "epoch": 4,
+      "train_loss": 1.8293,
+      "val_macro_f1": 0.2021
+    },
+    {
+      "epoch": 5,
+      "train_loss": 1.6117,
+      "val_macro_f1": 0.1957
+    },
+    {
+      "epoch": 6,
+      "train_loss": 1.5018,
+      "val_macro_f1": 0.2074
+    },
+    {
+      "epoch": 7,
+      "train_loss": 1.2824,
+      "val_macro_f1": 0.2931
+    },
+    {
+      "epoch": 8,
+      "train_loss": 1.1927,
+      "val_macro_f1": 0.2704
+    }
+  ]
+}

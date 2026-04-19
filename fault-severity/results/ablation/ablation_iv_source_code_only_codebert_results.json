@@ -1,0 +1,56 @@
+{
+  "ablation": "iv_source_code_only",
+  "description": "Source code ONLY \u2192 LLM \u2192 Linear(768,4). No metrics, scaler, or SMOTE. Mashhadi et al. RQ2.",
+  "model": "codebert",
+  "model_name": "microsoft/codebert-base",
+  "Accuracy": 0.7773,
+  "Macro F1": 0.709,
+  "Weighted F1": 0.7653,
+  "MCC": 0.5754,
+  "G-Mean": 0.6438,
+  "Precision (Macro)": 0.7598,
+  "Recall (Macro)": 0.6784,
+  "ROC-AUC (Macro)": 0.8872,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.14,
+      "val_macro_f1": 0.3653
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.8325,
+      "val_macro_f1": 0.5217
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.6371,
+      "val_macro_f1": 0.6291
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.377,
+      "val_macro_f1": 0.6989
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.2291,
+      "val_macro_f1": 0.709
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.1469,
+      "val_macro_f1": 0.7
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.086,
+      "val_macro_f1": 0.7076
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.0518,
+      "val_macro_f1": 0.6995
+    }
+  ]
+}

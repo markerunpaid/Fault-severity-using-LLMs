@@ -1,0 +1,56 @@
+{
+  "ablation": "ii_no_scaler_no_smote",
+  "description": "No RobustScaler + No SMOTE; raw imbalanced metrics; LLM embeddings + metrics",
+  "model": "graphcodebert",
+  "model_name": "microsoft/graphcodebert-base",
+  "Accuracy": 0.6801,
+  "Macro F1": 0.3997,
+  "Weighted F1": 0.5654,
+  "MCC": 0.348,
+  "G-Mean": 0.8904,
+  "Precision (Macro)": 0.3666,
+  "Recall (Macro)": 0.4472,
+  "ROC-AUC (Macro)": 0.7057,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 344.2272,
+      "val_macro_f1": 0.1951
+    },
+    {
+      "epoch": 2,
+      "train_loss": 179.6497,
+      "val_macro_f1": 0.22
+    },
+    {
+      "epoch": 3,
+      "train_loss": 51.3824,
+      "val_macro_f1": 0.2081
+    },
+    {
+      "epoch": 4,
+      "train_loss": 36.3029,
+      "val_macro_f1": 0.2209
+    },
+    {
+      "epoch": 5,
+      "train_loss": 18.8903,
+      "val_macro_f1": 0.195
+    },
+    {
+      "epoch": 6,
+      "train_loss": 8.358,
+      "val_macro_f1": 0.3833
+    },
+    {
+      "epoch": 7,
+      "train_loss": 1.7253,
+      "val_macro_f1": 0.3823
+    },
+    {
+      "epoch": 8,
+      "train_loss": 1.0381,
+      "val_macro_f1": 0.3997
+    }
+  ]
+}
