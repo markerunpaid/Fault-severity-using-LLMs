@@ -1,4 +1,3 @@
-# src/train_final.py
 import torch
 import pandas as pd
 import numpy as np
@@ -12,6 +11,7 @@ from transformers import AutoTokenizer
 from model import ConcatClsModel
 from dataset import BugSeverityDataset
 from trainer import train_model, evaluate
+
 
 # ── RTX 3050 6GB settings ────────────────────────────────────────────────────
 BATCH_SIZE         = 4
@@ -31,11 +31,14 @@ BEST_CONFIG = {
 
 MODEL_NAME = "microsoft/codebert-base"
 
+
 def geometric_mean(y_true, y_pred):
     from sklearn.metrics import recall_score
+
     recalls = recall_score(y_true, y_pred, average=None, zero_division=0)
     recalls = recalls[recalls > 0]
     return float(np.prod(recalls) ** (1.0 / len(recalls))) if len(recalls) > 0 else 0.0
+
 
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -77,7 +80,7 @@ def main():
     print(f"\nModel parameters: {sum(p.numel() for p in model.parameters()):,}")
 
     # ── Train ────────────────────────────────────────────────────────────────
-    history = train_model(
+    train_model(
         model, train_loader, test_loader,
         BEST_CONFIG, device,
         save_path="checkpoints/best_codebert.pt"
@@ -96,7 +99,7 @@ def main():
     print("\n" + "="*60)
     print("FINAL TEST RESULTS — CodeBERT")
     print("="*60)
-    print(classification_report(-
+    print(classification_report(
         y_true, y_pred,
         labels=present_labels,
         target_names=present_names,
@@ -107,6 +110,7 @@ def main():
     print(f"Weighted F1: {f1_score(y_true, y_pred, average='weighted', zero_division=0):.4f}")
     print(f"MCC:         {matthews_corrcoef(y_true, y_pred):.4f}")
     print(f"G-Mean:      {geometric_mean(y_true, y_pred):.4f}")
+
 
 if __name__ == "__main__":
     main()

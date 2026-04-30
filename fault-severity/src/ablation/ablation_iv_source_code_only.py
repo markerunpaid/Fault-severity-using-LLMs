@@ -225,7 +225,7 @@ def run_ablation_iv(model_key):
         'warmup_ratio':  cfg["warmup_ratio"], 'dropout': cfg["dropout"],
         'epochs': EPOCHS, 'accumulation_steps': ACCUMULATION_STEPS,
     }
-    save_path = f"checkpoints/ablation_iv_source_only_{model_key}.pt"
+    save_path = f"checkpoints/ablation_iv_source_code_only_{model_key}.pt"
     history   = train_model(model, train_loader, test_loader, config, device, save_path=save_path)
 
     model.load_state_dict(torch.load(save_path, map_location=device))

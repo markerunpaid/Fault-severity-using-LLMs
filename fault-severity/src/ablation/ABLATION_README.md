@@ -124,7 +124,7 @@ checkpoints/
     ablation_i_no_scaler_{model}.pt
     ablation_ii_no_scaler_no_smote_{model}.pt
     ablation_iii_no_metrics_{model}.pt
-    ablation_iv_source_only_{model}.pt
+    ablation_iv_source_code_only_{model}.pt
 ```
 
 Full pipeline checkpoints (`best_{model}.pt`) are **never overwritten**.
