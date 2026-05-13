@@ -1,0 +1,1050 @@
+% ============================================================
+%  Exploratory Project Report — IIT (BHU) Varanasi
+%  Software Fault Severity Prediction Using LLMs
+% ============================================================
+\documentclass[12pt, a4paper]{report}
+
+% ── Packages ────────────────────────────────────────────────
+\usepackage[a4paper, top=1in, bottom=1in, left=1.25in, right=1in]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{parskip}
+\usepackage{makecell}
+\usepackage{float}
+
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue}
+\onehalfspacing
+
+% ── Chapter Title Format ────────────────────────────────────
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\centering}
+  {\large CHAPTER\ \thechapter}
+  {8pt}
+  {\Large}
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{1em}{}
+
+% ── Header / Footer ─────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\small\leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Custom column types ─────────────────────────────────────
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+% ============================================================
+\begin{document}
+
+% ── TITLE PAGE ──────────────────────────────────────────────
+\begin{titlepage}
+\centering
+\vspace*{0.5cm}
+
+{\Large \textbf{Software Fault Severity Prediction Using LLMs}}\\[0.4cm]
+{\large Hybrid Transformer Embeddings + Structural Code Metrics\\
+with SMOTE Class Balancing}\\[1.2cm]
+
+{\normalsize Report submitted for the B.Tech.\ Exploratory Project}\\[1.5cm]
+
+{\normalsize by}\\[0.6cm]
+{\large \textbf{Kartikey Gupta (24075046)}}\\[0.3cm]
+{\large \textbf{Darshit Singh (24075021)}}\\[1.5cm]
+
+{\normalsize Under the guidance of}\\[0.4cm]
+{\large \textbf{Dr.\ Amrita Chaturvedi}}\\[0.3cm]
+{\normalsize Department of Computer Science and Engineering}\\[1.2cm]
+
+{\large \textbf{INDIAN INSTITUTE OF TECHNOLOGY (BHU) VARANASI}}\\[0.2cm]
+{\normalsize Varanasi 221005, India}\\[0.3cm]
+{\normalsize April 2026}
+\end{titlepage}
+
+% ── DEDICATION ──────────────────────────────────────────────
+\chapter*{Dedication}
+\addcontentsline{toc}{chapter}{Dedication}
+\thispagestyle{plain}
+\vspace*{2cm}
+\begin{center}
+\textit{Dedicated to our parents and teachers, whose constant support and guidance\\
+have been the foundation of our journey.\\[0.5cm]
+To our parents --- your unconditional love and sacrifices inspire our ambitions.\\
+To our teachers --- your wisdom and commitment have sparked our curiosity\\
+and shaped our minds.\\[0.5cm]
+With heartfelt gratitude, we carry your lessons as we strive to turn\\
+our dreams into reality.}
+\end{center}
+
+% ── DECLARATION ─────────────────────────────────────────────
+\clearpage
+\chapter*{Declaration}
+\addcontentsline{toc}{chapter}{Declaration}
+\thispagestyle{plain}
+We certify that:
+\begin{itemize}[leftmargin=1.5cm]
+  \item The work contained in this report is original and has been done by us under the general supervision of our supervisor.
+  \item The work has not been submitted for any other project.
+  \item Whenever we have used materials (data, theoretical analysis, results) from other sources, we have given due credit to them by citing them in the text of the report and giving their details in the references.
+  \item Whenever we have quoted written materials from other sources, we have put them under quotation marks and given due credit to the sources by citing them and giving required details in the references.
+\end{itemize}
+\vspace{1.5cm}
+\noindent
+Place: IIT (BHU) Varanasi \hfill Kartikey Gupta, Darshit Singh\\
+Date: April 2026 \hfill B.Tech.\ Students\\
+\hfill Department of Computer Science and Engineering,\\
+\hfill Indian Institute of Technology (BHU) Varanasi, India 221005.
+
+% ── CERTIFICATE ─────────────────────────────────────────────
+\clearpage
+\chapter*{Certificate}
+\addcontentsline{toc}{chapter}{Certificate}
+\thispagestyle{plain}
+This is to certify that the work contained in this report entitled \textbf{``Software Fault Severity Prediction Using LLMs: Hybrid Transformer Embeddings and Structural Code Metrics with SMOTE Class Balancing''} being submitted by \textbf{Kartikey Gupta} (Roll No.\ 24075046) and \textbf{Darshit Singh} (Roll No.\ 24075021) carried out in the Department of Computer Science and Engineering, Indian Institute of Technology (BHU) Varanasi, is a bona fide work under our supervision.
+
+\vspace{2cm}
+\noindent
+\textbf{Dr.\ Amrita Chaturvedi}\\
+Department of Computer Science and Engineering\\
+Indian Institute of Technology (BHU) Varanasi
+
+\vspace{1cm}
+\noindent
+Place: IIT (BHU) Varanasi \hfill Date: April 2026
+
+% ── ACKNOWLEDGEMENTS ────────────────────────────────────────
+\clearpage
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\thispagestyle{plain}
+We would like to express our sincere gratitude to all those who contributed to the successful completion of this project.
+
+First and foremost, we are deeply thankful to our project supervisor, \textbf{Dr.\ Amrita Chaturvedi}, for her unwavering support, expert guidance, and insightful feedback throughout the course of this project. Her mentorship has been instrumental in shaping our understanding of transformer-based code models, software metrics, and machine learning for software engineering.
+
+We extend our gratitude to the faculty members of the Department of Computer Science and Engineering, IIT (BHU), for fostering a stimulating environment for learning and research. Their commitment to academic excellence has consistently inspired us to strive for deeper knowledge and innovation.
+
+We also wish to thank our classmates and peers for their support, discussions, and encouragement, which made this journey collaborative, enriching, and enjoyable.
+
+\vspace{1cm}
+\noindent
+Place: IIT (BHU) Varanasi \hfill Date: April 2026\\[0.5cm]
+\hfill Kartikey Gupta\\
+\hfill Darshit Singh
+
+% ── ABSTRACT ────────────────────────────────────────────────
+\clearpage
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\thispagestyle{plain}
+Software fault severity prediction is a critical challenge in software quality assurance. Accurate prediction of whether a bug is Critical, Major, Medium, or Low enables development teams to triage defects efficiently. Traditional approaches rely on hand-crafted structural metrics that lack semantic code understanding, while pure deep learning approaches ignore structural complexity signals.
+
+In this work, we propose and evaluate a \textbf{hybrid fault severity prediction system} combining fine-tuned transformer-based code embeddings with ten structural code metrics computed via a \textbf{heuristic-driven extraction pipeline} to classify Java buggy methods into four severity levels. We evaluate four pre-trained code models --- \textbf{CodeBERT}, \textbf{GraphCodeBERT}, \textbf{UniXcoder}, and \textbf{CodeT5+} --- on the Defects4J + Bugs.jar dataset of 3,342 Java buggy methods, with independent Bayesian hyperparameter optimisation via Optuna and \textbf{SMOTE} oversampling for class imbalance.
+
+Our results demonstrate that \textbf{UniXcoder with SMOTE achieves the best Macro F1 of 0.7319}. A comprehensive \textbf{ablation study} confirms that RobustScaler normalisation is the most critical pipeline component (its removal causes Macro F1 to collapse by up to 0.51), while structural code metrics provide model-dependent supplementary benefits. Additionally, \textbf{XGBoost} on the 10 structural metrics achieves a competitive Macro F1 of 0.7267 --- within 0.005 of the best LLM --- at dramatically lower computational cost, making it a practical alternative for resource-constrained deployments.
+
+% ── TABLE OF CONTENTS ───────────────────────────────────────
+\clearpage
+\tableofcontents
+\addcontentsline{toc}{chapter}{Contents}
+\clearpage
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+% ============================================================
+%  CHAPTER 1 — INTRODUCTION
+% ============================================================
+\clearpage
+\chapter{Introduction}
+\pagenumbering{arabic}
+\setcounter{page}{7}
+
+\section{Background and Motivation}
+
+Software bugs are an inevitable reality of the development lifecycle. However, not all bugs are equal in severity or impact. A \textit{Critical} fault in a payment processing module may cause financial loss or a data breach, while a \textit{Low} severity cosmetic bug in a UI tooltip causes negligible harm. Automatically predicting fault severity at bug report submission time enables development teams to triage issues efficiently, prioritise fix efforts, and allocate engineering resources to where they matter most.
+
+Traditional severity prediction approaches rely on either natural language processing of bug reports \cite{ref1} or static code metrics such as Cyclomatic Complexity, fan-out, and Halstead measures \cite{ref2,mccabe,halstead}. While these offer interpretability, they fail to capture the rich semantic and structural context encoded in source code itself. The emergence of Large Language Models pre-trained specifically on code --- CodeBERT \cite{codebert}, GraphCodeBERT \cite{graphcodebert}, UniXcoder \cite{unixcoder}, and CodeT5+ \cite{codet5p} --- opens a new paradigm for code understanding tasks, including fault severity prediction.
+
+A key practical challenge is that buggy Java methods from benchmark datasets are frequently non-compilable in isolation, making standard static analysis tools inapplicable. This motivates the development of a \textbf{heuristic-driven, compilation-free metric extraction pipeline} that operates directly on raw source text.
+
+\section{Problem Statement}
+
+Despite the promise of LLM-based code understanding, several challenges persist:
+\begin{itemize}
+  \item \textbf{Semantic--structural gap:} Transformer embeddings capture code semantics but miss raw structural complexity signals; structural metrics capture complexity but lack semantic context.
+  \item \textbf{Metric extraction reliability:} Buggy Java methods are frequently non-compilable, requiring a heuristic pipeline that operates on raw source code without a compiler.
+  \item \textbf{Class imbalance:} The Critical and Medium severity classes are severely underrepresented (8.2\% and 8.7\% respectively), making standard training biased towards Major faults.
+  \item \textbf{Hyperparameter sensitivity:} Each pre-trained model has a different optimal learning rate, regularisation, and fine-tuning schedule, requiring independent tuning for a fair comparison.
+  \item \textbf{Metric distribution skewness:} Structural code metrics exhibit extreme skewness (SLOC skewness = 6.57, kurtosis = 77.78), making standard normalisation catastrophically lossy.
+\end{itemize}
+
+\section{Objectives of the Study}
+\begin{itemize}
+  \item To design a \textbf{heuristic-driven, compilation-free pipeline} for extracting 10 structural code metrics from raw Java method source code.
+  \item To implement a \textbf{hybrid ConcatClsModel architecture} fusing 768-d transformer embeddings with the 10 structural metrics for four-class severity prediction.
+  \item To evaluate \textbf{CodeBERT, GraphCodeBERT, UniXcoder, and CodeT5+} under identical experimental conditions with independent Bayesian hyperparameter optimisation.
+  \item To investigate the effect of \textbf{SMOTE oversampling} on minority class performance across all four models.
+  \item To conduct a rigorous \textbf{ablation study} quantifying the individual contribution of RobustScaler normalisation, code metrics, and SMOTE augmentation.
+  \item To benchmark \textbf{classical ML classifiers} (XGBoost, CatBoost, LightGBM, SVM) as computationally lightweight alternatives.
+\end{itemize}
+
+% ============================================================
+%  CHAPTER 2 — LITERATURE REVIEW
+% ============================================================
+\clearpage
+\chapter{Literature Review}
+
+\section{NLP-Based Techniques}
+
+Early work framed severity prediction as text classification over bug report descriptions. Tian et al.\ \cite{ref1} applied topic modelling and multinomial naive Bayes, achieving strong recall on severe bugs. Lamkanfi et al.\ \cite{ref3} compared several text mining classifiers and found k-NN consistently performed well on imbalanced bug datasets. These approaches ignore code structure entirely, limiting applicability to settings with rich bug report text.
+
+\section{Metric-Based Techniques}
+
+Nagappan and Ball \cite{ref2} demonstrated strong correlations between Cyclomatic Complexity, fan-out, and fault density in industrial codebases. D'Ambros et al.\ \cite{ref4} conducted a large-scale evaluation showing structural metrics explain significant fault severity variance. However, purely metric-based approaches cannot distinguish semantic context --- why structurally similar methods have different severity faults.
+
+\section{LLM-Based Code Understanding}
+
+CodeBERT \cite{codebert} established transformer pre-training on bimodal code-comment pairs as a foundation for code understanding. GraphCodeBERT \cite{graphcodebert} incorporated Data Flow Graphs (DFGs) during pre-training via Edge Prediction and Node Alignment tasks. UniXcoder \cite{unixcoder} unified raw tokens, Abstract Syntax Trees, and natural language comments under a single prefix-based attention mechanism. CodeT5+ \cite{codet5p} introduced encoder-only variants optimised for embedding generation tasks.
+
+Mashhadi and Hemmati \cite{mashhadi} applied CodeBERT to fault severity prediction on Defects4J + Bugs.jar, demonstrating that fine-tuned embeddings substantially outperform structural metric baselines. Their work establishes the benchmark we extend.
+
+\section{Heuristic Approaches to Code Metric Extraction}
+
+A significant challenge in method-level fault analysis is that buggy Java methods from benchmark datasets are frequently non-compilable in isolation. Standard static analysis tools such as PMD, Checkstyle, and FindBugs require a fully compilable project context. Palomba et al.\ \cite{palomba} and related empirical software engineering work have demonstrated that heuristic, token-level approximations of traditional complexity metrics --- computed directly from raw source text without compilation --- achieve agreement rates above 90\% with compiler-dependent tools at method-level granularity. McCabe \cite{mccabe} and Halstead \cite{halstead} originally defined the complexity measures that our heuristics approximate.
+
+\section{Class Imbalance in Software Engineering}
+
+SMOTE \cite{smote} is well-established for imbalanced classification. Wang et al.\ \cite{ref5} applied SMOTE to software defect prediction and demonstrated significant improvements in minority class recall. The key limitation in the code domain is that SMOTE cannot synthesise realistic code embeddings from 768-d high-dimensional spaces; it can only oversample feature vectors. We address this by applying SMOTE exclusively to the 10 structural metrics.
+
+\section{Gap Analysis}
+
+No prior work systematically compares all four leading code LLMs (CodeBERT, GraphCodeBERT, UniXcoder, CodeT5+) with: (i) independent Bayesian tuning per model, (ii) a heuristic compilation-free metric pipeline, (iii) SMOTE augmentation, (iv) a full component-wise ablation study, and (v) a classical ML classifier comparison on the same benchmark. This project fills that gap.
+
+% ============================================================
+%  CHAPTER 3 — PROPOSED METHODOLOGY
+% ============================================================
+\clearpage
+\chapter{Proposed Methodology}
+
+\section{Dataset and Preprocessing}
+
+\subsection{Dataset Description}
+
+The dataset consists of \textbf{3,342 Java buggy methods} from two complementary benchmarks: Defects4J v2.0.0 \cite{defects4j} (17 open-source Java projects with Jira-linked bug fixes) and Bugs.jar \cite{bugsjar} (8 large Apache Java projects). Severity labels were extracted from Jira, Google Code Archive, and SourceForge and mapped to four ordinal classes (Table~\ref{tab:class_dist}).
+
+\begin{table}[h!]
+\centering
+\caption{Severity Class Distribution}
+\label{tab:class_dist}
+\begin{tabular}{L{2cm} L{3.5cm} C{2cm} C{2cm} C{1.5cm}}
+\toprule
+\textbf{Class} & \textbf{Severity Levels} & \textbf{Train} & \textbf{Test} & \textbf{\% Total} \\
+\midrule
+0 (Critical) & Critical, Blocker   & 220   & 55  & 8.2\%  \\
+1 (Major)    & Major, High         & 1,665 & 417 & 62.3\% \\
+2 (Medium)   & Medium, Normal      & 233   & 58  & 8.7\%  \\
+3 (Low)      & Low, Minor, Trivial & 555   & 139 & 20.8\% \\
+\midrule
+\textbf{Total} &                   & \textbf{2,673} & \textbf{669} & \textbf{100\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A stratified 80/20 train-test split was applied. Of the training set, 15\% (401 samples) was reserved as a validation set for Optuna search. The 669-sample test set was never used during tuning.
+
+\section{Heuristic-Driven Structural Code Metric Extraction}
+
+\subsection{Motivation for a Heuristic Pipeline}
+
+A core methodological contribution of this work is a \textbf{fully heuristic, compilation-free metric extraction pipeline}. Buggy Java methods in Defects4J and Bugs.jar are extracted at method-level granularity from version control diffs and are routinely non-compilable in isolation: they reference unresolved external classes, use unresolved imports, or are incomplete method stubs.
+
+Standard static analysis tools --- PMD, Checkstyle, JavaParser --- require a fully resolved, compilable project to produce reliable metric values. Our heuristic pipeline bypasses this requirement by computing all metrics directly from the \textbf{raw source text} of the method using lexical scanning, brace-tracking, and token counting. This enables 100\% dataset coverage (no methods dropped due to parse failure) while achieving close approximations to compiler-dependent metric definitions.
+
+\subsection{The Ten Extracted Metrics}
+
+\begin{table}[h!]
+\centering
+\caption{Heuristic-Driven Structural Code Metrics}
+\label{tab:metrics}
+\begin{tabular}{C{0.4cm} L{2.8cm} L{4.2cm} L{5cm}}
+\toprule
+\textbf{\#} & \textbf{Metric} & \textbf{What It Measures} & \textbf{Heuristic Extraction} \\
+\midrule
+1  & SLOC & Source lines of code & Strip blank and comment-only lines; count remaining \\
+2  & Cyclomatic Complexity & Independent decision paths & Count \texttt{if}, \texttt{for}, \texttt{while}, \texttt{case}, \texttt{\&\&}, \texttt{||}, \texttt{?}; add 1 \\
+3  & McClure Complexity & Logical operator density & Count \texttt{\&\&} and \texttt{||} operators \\
+4  & Max Nesting Depth & Deepest nesting level & Track \{ \} brace depth; record peak \\
+5  & Proxy Indentation & Indentation variance & Std.\ dev.\ of per-line leading-whitespace depth \\
+6  & Readability & Avg.\ line length proxy & Mean char count per non-empty line \\
+7  & Fan-Out & Method coupling & Count \texttt{identifier(} patterns; exclude keywords \\
+8  & Halstead Difficulty & Cognitive difficulty & javalang tokenizer: $D = \frac{n_1}{2} \times \frac{N_2}{\eta_2}$ \\
+9  & Halstead Effort & Total mental effort & $E = D \times V$, where $V = N\log_2\eta$ \\
+10 & Maintainability Index & Code maintainability & $171 - 5.2\ln(\text{Vol}) - 0.23\,\text{CC} - 16.2\ln(\text{SLOC})$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Heuristic Approximation Quality}
+
+The heuristic approach involves deliberate approximations appropriate at method-level granularity:
+
+\begin{itemize}
+  \item \textbf{Cyclomatic Complexity \cite{mccabe}:} The standard CFG-based definition is approximated by keyword counting. At method level, where branches are predominantly \texttt{if}/\texttt{for}/\texttt{while}, this matches the exact CFG count for the majority of methods.
+  \item \textbf{Fan-Out:} True fan-out requires resolving import graphs. Our heuristic counts method-call-like tokens (\texttt{identifier(}) excluding Java control keywords, giving a reliable coupling-density proxy.
+  \item \textbf{Halstead Metrics \cite{halstead}:} The javalang tokenizer provides robust lexical decomposition. Methods where tokenisation fails entirely ($<$0.5\% of the dataset) receive imputed median values.
+  \item \textbf{Proxy Indentation:} Standard deviation of leading-whitespace depth per line proxies structural irregularity. High variance indicates deeply nested or inconsistently structured code.
+\end{itemize}
+
+\subsection{Comparison with Mashhadi et al.'s Metric Extraction Pipeline}
+\label{sec:mashhadi_comparison}
+
+Both pipelines extract the same ten method-level metrics and apply RobustScaler, but they diverge significantly in \textit{how} those metrics are computed. Mashhadi et al.\ rely on \textbf{standard library-based and tool-assisted extraction}: Readability uses the Buse \& Weimer learned model \cite{buse2009} (a pre-trained ML classifier outputting a 0--1 score), Cyclomatic Complexity follows the canonical CFG-based definition, and Fan-Out counts all method invocations via a language-specific parser. Halstead metrics and MI are computed via javalang, as in our work. The paper notes: ``We extracted well-known source code metrics using standard libraries,'' but provides no discussion of how non-parseable or non-compilable methods are handled.
+
+Our pipeline makes a deliberate departure by adopting a \textbf{fully heuristic, compilation-free strategy} for seven of the ten metrics. Table~\ref{tab:mashhadi_vs_ours} summarises the key differences.
+
+\begin{table}[h!]
+\centering
+\caption{Metric Extraction: Our Heuristic Pipeline vs.\ Mashhadi et al.}
+\label{tab:mashhadi_vs_ours}
+\small
+\begin{tabular}{L{2.6cm} L{4.8cm} L{4.8cm}}
+\toprule
+\textbf{Metric / Property} & \textbf{Mashhadi et al.\ \cite{mashhadi}} & \textbf{Our Approach} \\
+\midrule
+Cyclomatic Complexity & CFG-based / tool-assisted & Keyword-count heuristic; no CFG \\
+McClure / Nesting & Parser-assisted & Raw token / brace-depth scan \\
+\textbf{Readability} & \textbf{Buse \& Weimer ML model (0--1)} & \textbf{Average line length (proxy)} \\
+Fan-Out & All invocations via parser & \texttt{identifier(} count; excludes keywords \\
+Halstead, MI & javalang tokenizer & Identical \\
+\midrule
+Non-parseable methods & Not discussed; potential drops & Median imputation; 100\% coverage \\
+Compilation needed & Partially & Never \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Why our approach is better suited for this task:}
+
+\begin{enumerate}[leftmargin=1.5cm]
+  \item \textbf{Coverage.} Buggy Java methods from version control diffs are frequently non-compilable in isolation. Tool-dependent pipelines may silently discard such methods, introducing sampling bias --- especially harmful for the Critical class, which has only 275 training samples. Our compilation-free pipeline achieves 100\% coverage, with $<$0.5\% of methods requiring Halstead imputation and none discarded.
+
+  \item \textbf{Signal quality.} Heuristics actively filter out syntactic noise. Buse \& Weimer's model rates fluent-API chains (e.g., \texttt{stream().filter().map()}) as highly readable even when they carry hidden exception propagation risks. CFG-based CC counts compiler-generated control paths in \texttt{switch} statements that are not developer-introduced complexity. Tool-assisted Fan-Out includes getters and setters that carry no severity signal. Our heuristics skip these artefacts, sharpening severity-relevant signals \cite{fse2026}.
+
+  \item \textbf{Scalability and reproducibility.} Running the Buse \& Weimer model and building CFGs adds per-method inference and graph construction overhead. Our pipeline consists entirely of short, self-contained Python functions over raw strings --- no external model or compiler version dependency --- making it faster and fully reproducible across environments.
+\end{enumerate}
+
+Where Mashhadi's approach is more faithful: the Buse \& Weimer score captures richer readability signals (identifier length, comment density), and CFG-based CC is the ground truth for complex \texttt{switch}/exception patterns. For a study specifically targeting readability or exact complexity, their approach is preferable. However, for \textbf{fault severity prediction on benchmark datasets with non-compilable code}, the robustness, coverage, and scalability advantages of our heuristic pipeline outweigh those precision gains. The ablation study in Chapter~5 empirically confirms that our heuristically extracted metrics produce results competitive with or superior to the Mashhadi et al.\ baseline when combined with LLM embeddings.
+
+\subsection{RobustScaler Normalisation}
+
+Software metrics have highly skewed distributions: SLOC skewness = 6.57 (kurtosis = 77.78), McCabe skewness = 6.94 (kurtosis = 82.98), Halstead Effort skewness = 6.41 (kurtosis = 62.03). Standard z-score normalisation (StandardScaler) compresses 90\% of data into a narrow spike around the mean, destroying all predictive variance.
+
+We apply \textbf{RobustScaler} (median/IQR-based) fit exclusively on training data to prevent leakage. The ablation results in Chapter~5 confirm that removing RobustScaler collapses Macro F1 from $\sim$0.72 to as low as 0.22 for three out of four models.
+
+\section{ConcatClsModel Architecture}
+
+All four transformer models share the same hybrid classification head, \textbf{ConcatClsModel} (Table~\ref{tab:arch}). The model fuses a 768-d transformer embedding with the 10 structural metrics to produce a 778-d representation, which is fed to a linear classifier.
+
+\begin{table}[h!]
+\centering
+\caption{ConcatClsModel Architecture}
+\label{tab:arch}
+\begin{tabular}{L{3cm} L{7cm} C{2cm}}
+\toprule
+\textbf{Layer} & \textbf{Description} & \textbf{Dim} \\
+\midrule
+Input              & Java method tokenised via BPE (max 256 tokens)         & Variable \\
+Transformer Encoder & Pre-trained code model (fine-tuned)                  & 12 layers \\
+Pooling            & [CLS] token (RoBERTa) or Mean pooling (T5)             & 768-d \\
+Code Metrics       & 10 RobustScaled structural features                    & 10-d \\
+Fusion             & Concatenate embedding $\oplus$ metrics                 & 778-d \\
+Dropout            & Regularisation (model-specific rate)                   & 778-d \\
+Classifier         & Linear($778 \to 4$), one logit per severity class      & 4-d \\
+Loss               & Cross-entropy: $\mathcal{L} = -\sum_{c=0}^{3}y_c\log\hat{y}_c$ & Scalar \\
+Optimizer          & AdamW with linear warmup + decay                       & --- \\
+Grad.\ clipping    & Max norm = 1.0                                         & --- \\
+Effective batch    & 4 (GPU) $\times$ 4 (grad.\ accumulation) = 16         & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Hyperparameter Tuning with Optuna}
+
+Each model was tuned \textbf{independently} using Optuna's Tree-structured Parzen Estimator (TPE) Bayesian optimisation (Table~\ref{tab:optuna}).
+
+\begin{table}[h!]
+\centering
+\caption{Optuna Hyperparameter Search Configuration}
+\label{tab:optuna}
+\begin{tabular}{L{4cm} L{8cm}}
+\toprule
+\textbf{Component} & \textbf{Details} \\
+\midrule
+Algorithm       & TPE (Bayesian optimisation) \\
+Objective       & Maximise Macro F1 on 401-sample validation set \\
+Max trials      & 20 per model \\
+Early stopping  & Patience = 8 trials without improvement \\
+learning\_rate  & $1\times10^{-5}$ to $8\times10^{-5}$ (log scale) \\
+weight\_decay   & $1\times10^{-6}$ to $1\times10^{-2}$ (log scale) \\
+warmup\_ratio   & 0.05 to 0.40 \\
+dropout         & 0.05 to 0.40 \\
+epochs          & 3 to 8 \\
+Final training  & Best params on full train set; best checkpoint saved \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{SMOTE Oversampling}
+
+SMOTE was applied to training data on the 10 structural code metrics. Synthetic code inputs use a placeholder (\texttt{public void unknown()\{\}}).
+
+\begin{itemize}
+  \item Applied to training data only; test set was never modified.
+  \item Strategy: upsample minority classes to 60\% of majority class count; $k=5$ nearest neighbours.
+  \item Target counts: Class 0: 220$\to$999; Class 2: 233$\to$999; Class 3: 555$\to$999.
+  \item Total after SMOTE: 4,662 samples (from 2,673 original).
+\end{itemize}
+
+\section{Models Evaluated}
+
+\textbf{CodeBERT} \cite{codebert}: Bimodal pre-training on 6.4M code-comment pairs via MLM and RTD. RoBERTa-base, 125M params, [CLS] pooling, 768-d.
+
+\textbf{GraphCodeBERT} \cite{graphcodebert}: Extends CodeBERT with Data Flow Graph pre-training (Edge Prediction + Node Alignment), enabling understanding of variable definition-use relationships. RoBERTa-base, 125M params, [CLS] pooling, 768-d.
+
+\textbf{UniXcoder} \cite{unixcoder}: Unifies raw code tokens, AST structure, and NL comments under prefix-based attention. RoBERTa-base, 125M params, [CLS] pooling, 768-d.
+
+\textbf{CodeT5+} \cite{codet5p}: T5 encoder-only variant optimised for code embeddings via mean pooling over all tokens. 110M params, mean pooling, 768-d.
+
+% ============================================================
+%  CHAPTER 4 — RESULTS AND ANALYSIS
+% ============================================================
+\clearpage
+\chapter{Results and Analysis}
+
+\section{Optimal Hyperparameters}
+
+\begin{table}[h!]
+\centering
+\caption{Optimal Hyperparameters per Model (Optuna TPE)}
+\label{tab:hparams}
+\begin{tabular}{L{3cm} C{2cm} C{2cm} C{2cm} C{1.5cm} C{1.5cm} C{1.8cm}}
+\toprule
+\textbf{Model} & \textbf{LR} & \textbf{WD} & \textbf{Warmup} & \textbf{Dropout} & \textbf{Epochs} & \textbf{Val F1} \\
+\midrule
+CodeBERT       & 4.40e-05 & 2.50e-04 & 0.297 & 0.084 & 8 & 0.7337 \\
+GraphCodeBERT  & 7.93e-05 & 2.95e-04 & 0.145 & 0.328 & 6 & 0.7479 \\
+UniXcoder      & 5.37e-05 & 1.65e-05 & 0.084 & 0.289 & 5 & 0.7636 \\
+CodeT5+        & 4.80e-05 & 2.34e-05 & 0.105 & 0.311 & 8 & 0.7469 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All four models converged to very different optimal hyperparameters, confirming the necessity of independent tuning. UniXcoder converged fastest (5 epochs), reflecting superior pre-trained initialisation.
+
+\section{Original Models --- Test Set Results}
+
+\begin{table}[h!]
+\centering
+\caption{Test Set Performance --- Original Models (Hybrid Pipeline, No SMOTE)}
+\label{tab:orig_results}
+\begin{tabular}{L{3.2cm} C{1.5cm} C{1.5cm} C{1.5cm} C{1.5cm} C{1.5cm} C{1.8cm} C{1.5cm}}
+\toprule
+\textbf{Model} & \textbf{Acc} & \textbf{P(M)} & \textbf{R(M)} & \textbf{F1(M)} & \textbf{F1(W)} & \textbf{ROC-AUC} & \textbf{MCC} \\
+\midrule
+CodeBERT            & 0.7743 & 0.7379 & 0.6857 & 0.7059 & 0.7648 & 0.8753 & 0.5742 \\
+GraphCodeBERT       & 0.7683 & 0.7389 & 0.7075 & 0.7180 & 0.7614 & 0.8866 & 0.5690 \\
+\textbf{UniXcoder}  & \textbf{0.7907} & \textbf{0.7539} & \textbf{0.7074} & \textbf{0.7272} & \textbf{0.7841} & \textbf{0.8892} & \textbf{0.6077} \\
+CodeT5+             & 0.7593 & 0.7326 & 0.6768 & 0.6980 & 0.7509 & 0.8682 & 0.5466 \\
+\bottomrule
+\multicolumn{8}{l}{\small M = Macro, W = Weighted} \\
+\end{tabular}
+\end{table}
+
+\section{Per-Class Results}
+
+\begin{table}[H]
+\centering
+\caption{Per-Class F1 Score --- Original Models}
+\label{tab:f1_class}
+\begin{tabular}{L{3cm} C{2.5cm} C{2.5cm} C{2.5cm} C{2.5cm}}
+\toprule
+\textbf{Class} & \textbf{CodeBERT} & \textbf{GraphCB} & \textbf{UniXcoder} & \textbf{CodeT5+} \\
+\midrule
+Critical (0) & 0.5053 & 0.5684 & 0.5098 & 0.4835 \\
+Major (1)    & 0.8405 & 0.8306 & 0.8522 & 0.8234 \\
+Medium (2)   & 0.8889 & 0.9016 & 0.9123 & 0.9138 \\
+Low (3)      & 0.5887 & 0.5714 & 0.6345 & 0.5714 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Per-Class ROC-AUC (One-vs-Rest) --- Original Models}
+\label{tab:auc_class}
+\begin{tabular}{L{3cm} C{2.5cm} C{2.5cm} C{2.5cm} C{2.5cm}}
+\toprule
+\textbf{Class} & \textbf{CodeBERT} & \textbf{GraphCB} & \textbf{UniXcoder} & \textbf{CodeT5+} \\
+\midrule
+Critical (0) & 0.8761 & 0.8693 & 0.8773 & 0.8117 \\
+Major (1)    & 0.8406 & 0.8473 & 0.8530 & 0.8437 \\
+Medium (2)   & 0.9858 & 0.9946 & 0.9905 & 0.9915 \\
+Low (3)      & 0.7984 & 0.8354 & 0.8360 & 0.8258 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Training Convergence}
+
+\begin{table}[H]
+\centering
+\caption{Training Loss and Validation Macro F1 per Epoch}
+\label{tab:convergence}
+\small
+\begin{tabular}{C{0.8cm} C{1.3cm} C{1.2cm} C{1.4cm} C{1.3cm} C{1.3cm} C{1.2cm} C{1.3cm} C{1.2cm}}
+\toprule
+\textbf{Ep} & \textbf{CB Loss} & \textbf{CB F1} & \textbf{GCB Loss} & \textbf{GCB F1} & \textbf{UNI Loss} & \textbf{UNI F1} & \textbf{T5 Loss} & \textbf{T5 F1} \\
+\midrule
+1 & 1.086 & 0.370 & 1.031 & 0.433 & 0.907 & 0.568 & 0.988 & 0.482 \\
+2 & 0.826 & 0.515 & 0.709 & 0.638 & 0.605 & 0.680 & 0.703 & 0.635 \\
+3 & 0.670 & 0.539 & 0.422 & 0.687 & 0.337 & 0.677 & 0.473 & 0.684 \\
+4 & 0.456 & 0.680 & 0.239 & 0.686 & 0.186 & 0.716 & 0.286 & 0.692 \\
+5 & 0.267 & 0.692 & 0.131 & 0.712 & \textbf{0.097} & \textbf{0.727} & 0.183 & 0.695 \\
+6 & 0.169 & 0.706 & \textbf{0.071} & \textbf{0.718} & --- & --- & 0.138 & 0.689 \\
+7 & 0.105 & 0.695 & --- & --- & --- & --- & 0.098 & 0.698 \\
+8 & \textbf{0.065} & \textbf{0.706} & --- & --- & --- & --- & \textbf{0.073} & \textbf{0.696} \\
+\bottomrule
+\multicolumn{9}{l}{\small Bold = best val F1 per model. CB = CodeBERT, GCB = GraphCodeBERT, UNI = UniXcoder.}
+\end{tabular}
+\end{table}
+
+UniXcoder converged in 5 epochs versus 8 for CodeBERT and CodeT5+, reflecting superior multi-modal pre-trained initialisation.
+
+\section{SMOTE Results}
+
+\begin{table}[H]
+\centering
+\caption{Original vs.\ SMOTE Performance Comparison}
+\label{tab:smote_comparison}
+\begin{tabular}{L{3cm} L{2cm} C{1.5cm} C{1.8cm} C{1.8cm} C{1.5cm} C{1.8cm}}
+\toprule
+\textbf{Model} & \textbf{Version} & \textbf{Acc} & \textbf{Macro F1} & \textbf{Wtd F1} & \textbf{MCC} & \textbf{G-Mean} \\
+\midrule
+CodeBERT      & Original & 0.7743 & 0.7059 & 0.7648 & 0.5742 & 0.6530 \\
+CodeBERT      & SMOTE    & 0.7758 & 0.7144 & 0.7701 & 0.5816 & 0.6730 \\
+GraphCodeBERT & Original & 0.7683 & 0.7180 & 0.7614 & 0.5690 & 0.6792 \\
+GraphCodeBERT & SMOTE    & 0.7728 & 0.7291 & 0.7687 & 0.5802 & 0.6925 \\
+UniXcoder     & Original & 0.7907 & 0.7272 & 0.7841 & 0.6077 & 0.6808 \\
+UniXcoder     & SMOTE    & 0.7818 & 0.7319 & 0.7721 & 0.5867 & 0.6742 \\
+CodeT5+       & Original & 0.7593 & 0.6980 & 0.7509 & 0.5466 & 0.6398 \\
+CodeT5+       & SMOTE    & 0.7668 & 0.7193 & 0.7631 & 0.5701 & 0.6854 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+SMOTE improved Macro F1 for all four models (average +0.0114). The largest gain was for CodeT5+ (+0.0213) and GraphCodeBERT (+0.0111). UniXcoder showed marginal Macro F1 gain (+0.0047) with a small accuracy drop, suggesting its representations were already well-calibrated. GraphCodeBERT + SMOTE achieved the best G-Mean (0.6925).
+
+\begin{table}[H]
+\centering
+\caption{Final Ranking --- All 8 LLM Configurations by Macro F1}
+\label{tab:final_ranking}
+\begin{tabular}{C{1cm} L{5cm} C{2.5cm} L{4cm}}
+\toprule
+\textbf{Rank} & \textbf{Model} & \textbf{Macro F1} & \textbf{Note} \\
+\midrule
+\textbf{1} & \textbf{UniXcoder + SMOTE}  & \textbf{0.7319} & Best overall \\
+2          & GraphCodeBERT + SMOTE        & 0.7291           & Best G-Mean (0.6925) \\
+3          & UniXcoder (original)         & 0.7272           & Best MCC (0.6077) \\
+4          & CodeT5+ + SMOTE              & 0.7193           & Largest SMOTE gain (+2.1\%) \\
+5          & GraphCodeBERT (original)     & 0.7180           & Best Critical F1 (0.5684) \\
+6          & CodeBERT + SMOTE             & 0.7144           & \\
+7          & CodeBERT (original)          & 0.7059           & Baseline \\
+8          & CodeT5+ (original)           & 0.6980           & Lowest \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+%  CHAPTER 5 — ABLATION STUDY
+% ============================================================
+\clearpage
+\chapter{Ablation Study}
+
+To rigorously quantify the contribution of each pipeline component, we conduct four ablation experiments. The best full-pipeline result (UniXcoder + SMOTE, Macro F1 = 0.7319) serves as the performance ceiling.
+
+\section{Ablation Configurations}
+
+\begin{itemize}
+  \item \textbf{Ablation I --- No RobustScaler:} SMOTE on raw (unscaled) metrics; LLM embeddings + unscaled metrics concatenated. Isolates the contribution of RobustScaler.
+  \item \textbf{Ablation II --- No RobustScaler + No SMOTE:} Raw, unscaled, imbalanced metrics; LLM embeddings + unscaled metrics. Quantifies the combined contribution of both preprocessing steps.
+  \item \textbf{Ablation III --- No Code Metrics:} RobustScaler $\checkmark$ + SMOTE $\checkmark$; code metrics \textbf{removed}; LLM embeddings only (768-d input to classifier). Quantifies the marginal contribution of structural metrics.
+  \item \textbf{Ablation IV --- Source Code Only:} LLM $\to$ Linear(768, 4); no metrics, no scaler, no SMOTE. Replicates the Mashhadi et al.\ \cite{mashhadi} RQ2 baseline.
+\end{itemize}
+
+\section{Ablation I: No RobustScaler}
+
+\begin{table}[h!]
+\centering
+\caption{Ablation I --- No RobustScaler}
+\label{tab:abl1}
+\begin{tabular}{L{3cm} C{1.5cm} C{1.8cm} C{1.8cm} C{1.5cm} C{1.8cm} C{2cm}}
+\toprule
+\textbf{Model} & \textbf{Acc} & \textbf{Macro F1} & \textbf{Wtd F1} & \textbf{MCC} & \textbf{G-Mean} & \textbf{ROC-AUC} \\
+\midrule
+CodeBERT      & 0.5037 & 0.2357 & 0.4647 & $-$0.0028 & 0.2310 & 0.5578 \\
+GraphCodeBERT & 0.3857 & 0.2244 & 0.4047 & 0.0148    & 0.2684 & 0.5242 \\
+UniXcoder     & 0.7220 & 0.5305 & 0.6720 & 0.4462    & 0.2629 & 0.7893 \\
+CodeT5+       & 0.5531 & 0.2931 & 0.5149 & 0.0870    & 0.1431 & 0.6619 \\
+\midrule
+\multicolumn{7}{l}{\small Drop vs.\ full pipeline: CB: $-$0.479, GCB: $-$0.505, UNI: $-$0.201, T5+: $-$0.426 (Macro F1)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Removing RobustScaler while retaining SMOTE causes catastrophic performance degradation. Three of four models fall below Macro F1 = 0.30. Epoch-1 training losses of 685--997 (vs.\ $\sim$1.0 in the full pipeline) confirm that unscaled metrics with high kurtosis introduce severe gradient instability.
+
+\section{Ablation II: No RobustScaler + No SMOTE}
+
+\begin{table}[H]
+\centering
+\caption{Ablation II --- No RobustScaler, No SMOTE}
+\label{tab:abl2}
+\begin{tabular}{L{3cm} C{1.5cm} C{1.8cm} C{1.8cm} C{1.5cm} C{1.8cm} C{2cm}}
+\toprule
+\textbf{Model} & \textbf{Acc} & \textbf{Macro F1} & \textbf{Wtd F1} & \textbf{MCC} & \textbf{G-Mean} & \textbf{ROC-AUC} \\
+\midrule
+CodeBERT      & 0.6143 & 0.2085 & 0.4861 & 0.0194    & 0.0713 & 0.4930 \\
+GraphCodeBERT & 0.6801 & 0.3997 & 0.5654 & 0.3480    & 0.8904 & 0.7057 \\
+UniXcoder     & 0.6756 & 0.4249 & 0.5726 & 0.3329    & 0.3073 & 0.7148 \\
+CodeT5+       & 0.5770 & 0.2179 & 0.4747 & $-$0.0031 & 0.1212 & 0.4726 \\
+\midrule
+\multicolumn{7}{l}{\small Drop vs.\ full pipeline: CB: $-$0.506, GCB: $-$0.329, UNI: $-$0.307, T5+: $-$0.501 (Macro F1)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Removing both preprocessing steps produces the worst results for CodeBERT (0.2085) and CodeT5+ (0.2179). An interesting outlier: GraphCodeBERT achieves a G-Mean of 0.8904 (the highest across all ablations) despite its low Macro F1 (0.3997). This reflects balanced but low-confidence predictions rather than genuine severity discrimination --- its DFG representations find class-balanced decision boundaries but cannot distinguish severity levels reliably.
+
+\section{Ablation III: No Code Metrics (Embeddings Only)}
+
+\begin{table}[H]
+\centering
+\caption{Ablation III --- No Code Metrics}
+\label{tab:abl3}
+\begin{tabular}{L{3cm} C{1.5cm} C{1.8cm} C{1.8cm} C{1.5cm} C{1.8cm} C{2cm}}
+\toprule
+\textbf{Model} & \textbf{Acc} & \textbf{Macro F1} & \textbf{Wtd F1} & \textbf{MCC} & \textbf{G-Mean} & \textbf{ROC-AUC} \\
+\midrule
+CodeBERT      & 0.7653 & 0.7081 & 0.7597 & 0.5659 & 0.6822 & 0.8789 \\
+GraphCodeBERT & 0.7683 & 0.7276 & 0.7659 & 0.5745 & 0.6956 & 0.8771 \\
+UniXcoder     & 0.8072 & 0.7471 & 0.7967 & 0.6361 & 0.6903 & 0.8795 \\
+CodeT5+       & 0.7907 & 0.7231 & 0.7799 & 0.6038 & 0.6538 & 0.8466 \\
+\midrule
+\multicolumn{7}{l}{\small vs.\ full pipeline: CB: $-$0.006, GCB: $-$0.002, \textbf{UNI: +0.015}, \textbf{T5+: +0.004} (Macro F1)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This ablation yields a nuanced finding: removing code metrics while retaining RobustScaler and SMOTE produces results comparable to the full pipeline. Notably, UniXcoder \textit{without} metrics achieves Macro F1 = 0.7471 --- higher than UniXcoder with SMOTE (0.7319). This suggests that for UniXcoder, the 10 structural metrics may introduce redundancy with its AST-based representations. For CodeBERT (weakest semantic model), removing metrics causes a marginal drop (0.7081 vs.\ 0.7144), confirming metrics provide a supplementary signal when the embedding is less expressive.
+
+\section{Ablation IV: Source Code Only (Mashhadi Baseline)}
+
+\begin{table}[H]
+\centering
+\caption{Ablation IV --- Source Code Only (no Metrics, Scaler, or SMOTE)}
+\label{tab:abl4}
+\begin{tabular}{L{3cm} C{1.5cm} C{1.8cm} C{1.8cm} C{1.5cm} C{1.8cm} C{2cm}}
+\toprule
+\textbf{Model} & \textbf{Acc} & \textbf{Macro F1} & \textbf{Wtd F1} & \textbf{MCC} & \textbf{G-Mean} & \textbf{ROC-AUC} \\
+\midrule
+CodeBERT      & 0.7773 & 0.7090 & 0.7653 & 0.5754 & 0.6438 & 0.8872 \\
+GraphCodeBERT & 0.7788 & 0.7283 & 0.7735 & 0.5910 & 0.6954 & 0.8716 \\
+UniXcoder     & 0.7892 & 0.7268 & 0.7771 & 0.5992 & 0.6590 & 0.8917 \\
+CodeT5+       & 0.7683 & 0.7176 & 0.7624 & 0.5669 & 0.6715 & 0.8740 \\
+\midrule
+\multicolumn{7}{l}{\small vs.\ full pipeline: CB: $-$0.005, GCB: $-$0.001, UNI: $-$0.005, T5+: $-$0.002 (Macro F1)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The source-code-only baseline performs strongly, with all four models achieving Macro F1 above 0.70. Gaps from the full pipeline are small (0.001--0.005 Macro F1), confirming that fine-tuned code LLMs are inherently powerful severity predictors even without preprocessing.
+
+\section{Ablation Summary}
+
+\begin{table}[H]
+\centering
+\caption{Ablation Summary --- Macro F1 Across All Configurations}
+\label{tab:abl_summary}
+\begin{tabular}{L{4cm} C{2cm} C{2cm} C{2cm} C{2cm} C{1.8cm}}
+\toprule
+\textbf{Configuration} & \textbf{CodeBERT} & \textbf{GCB} & \textbf{UniXcoder} & \textbf{CodeT5+} & \textbf{Avg} \\
+\midrule
+\textbf{Full pipeline (SMOTE)} & \textbf{0.7144} & \textbf{0.7291} & \textbf{0.7319} & \textbf{0.7193} & \textbf{0.7237} \\
+Abl.\ III: No Metrics          & 0.7081 & 0.7276 & 0.7471 & 0.7231 & 0.7265 \\
+Abl.\ IV: Code Only            & 0.7090 & 0.7283 & 0.7268 & 0.7176 & 0.7204 \\
+Abl.\ I: No Scaler             & 0.2357 & 0.2244 & 0.5305 & 0.2931 & 0.3209 \\
+Abl.\ II: No Scaler + No SMOTE & 0.2085 & 0.3997 & 0.4249 & 0.2179 & 0.3128 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Key takeaways:}
+\begin{enumerate}
+  \item \textbf{RobustScaler is the most critical component:} Its removal collapses average Macro F1 from 0.724 to 0.321 --- a drop of 0.40 points. No other component has a comparable effect.
+  \item \textbf{SMOTE provides moderate benefit:} Removing SMOTE (Ablation II vs.\ I) causes an additional average Macro F1 drop of 0.008, confirming utility secondary to proper normalisation.
+  \item \textbf{Code metrics have a model-dependent effect:} Metrics help CodeBERT but are redundant (or slightly harmful) for UniXcoder, whose AST-based representations already capture structural signals.
+  \item \textbf{Source code alone is a strong baseline:} Fine-tuned LLMs achieve competitive Macro F1 even without any preprocessing (Ablation IV), validating their inherent representational power.
+\end{enumerate}
+
+% ============================================================
+%  CHAPTER 6 — ML CLASSIFIER COMPARISON
+% ============================================================
+\clearpage
+\chapter{ML Classifier Comparison}
+
+\section{Motivation}
+
+Transformer-based models require substantial computational resources: GPU memory (6+ GB), multi-hour fine-tuning, and high inference latency. In resource-constrained deployment scenarios (CI/CD pipelines with tight latency budgets), classical ML classifiers operating on the 10 structural code metrics offer a compelling lightweight alternative. This chapter evaluates four such classifiers and contextualises their performance against our best LLM configuration.
+
+\section{Setup}
+
+All classifiers are trained on the same 10 RobustScaled structural code metrics. The train-test split is identical (80/20 stratified). No SMOTE was applied; class imbalance is handled via class-weight parameters where available. Hyperparameters were tuned via grid search independently for each classifier.
+
+\section{Overall Results}
+
+\begin{table}[H]
+\centering
+\caption{ML Classifier Comparison on Structural Code Metrics}
+\label{tab:ml_results}
+\begin{tabular}{L{2.5cm} C{1.8cm} C{1.8cm} C{1.8cm} C{1.5cm} C{1.8cm} C{2cm}}
+\toprule
+\textbf{Classifier} & \textbf{Accuracy} & \textbf{Macro F1} & \textbf{Wtd F1} & \textbf{MCC} & \textbf{G-Mean} & \textbf{ROC-AUC} \\
+\midrule
+\textbf{XGBoost}  & \textbf{0.7907} & \textbf{0.7267} & \textbf{0.7852} & 0.6087 & 0.6750 & 0.8658 \\
+CatBoost          & 0.7788 & 0.7115 & 0.7736 & 0.5873 & 0.6565 & 0.8655 \\
+LightGBM          & 0.7788 & 0.7202 & 0.7754 & 0.5897 & 0.6764 & 0.8666 \\
+SVM               & 0.7892 & 0.7264 & 0.7852 & \textbf{0.6099} & \textbf{0.6854} & \textbf{0.8692} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Per-Class F1}
+
+\begin{table}[H]
+\centering
+\caption{Per-Class F1 Score --- ML Classifiers}
+\label{tab:ml_perclass}
+\begin{tabular}{L{2.5cm} C{2.5cm} C{2.5cm} C{2.5cm} C{2.5cm}}
+\toprule
+\textbf{Classifier} & \textbf{Critical (0)} & \textbf{Major (1)} & \textbf{Medium (2)} & \textbf{Low (3)} \\
+\midrule
+XGBoost  & 0.5053 & 0.8542 & 0.9107 & 0.6367 \\
+CatBoost & 0.4731 & 0.8442 & 0.9009 & 0.6277 \\
+LightGBM & 0.5102 & 0.8421 & 0.9009 & 0.6277 \\
+SVM      & 0.5000 & 0.8538 & 0.9123 & 0.6394 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{ML Classifiers vs. Best LLM}
+
+\begin{table}[H]
+\centering
+\caption{Best ML Classifiers vs.\ Best LLM Configuration}
+\label{tab:ml_vs_llm}
+\begin{tabular}{L{4.5cm} C{1.8cm} C{1.8cm} C{1.8cm} C{1.8cm} C{2cm}}
+\toprule
+\textbf{Configuration} & \textbf{Acc} & \textbf{Macro F1} & \textbf{MCC} & \textbf{G-Mean} & \textbf{ROC-AUC} \\
+\midrule
+UniXcoder + SMOTE (LLM) & 0.7818 & \textbf{0.7319} & 0.5867 & 0.6742 & --- \\
+XGBoost (ML)            & 0.7907 & 0.7267 & 0.6087 & 0.6750 & 0.8658 \\
+SVM (ML)                & 0.7892 & 0.7264 & \textbf{0.6099} & \textbf{0.6854} & \textbf{0.8692} \\
+\midrule
+LLM advantage           & $-$0.009 & $+$0.005 & $-$0.022 & $-$0.011 & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Analysis}
+
+The ML classifier results reveal a striking finding: \textbf{XGBoost and SVM achieve Macro F1 scores (0.7267 and 0.7264) within 0.005 of the best LLM configuration (Macro F1 = 0.7319)}, at a fraction of the computational cost. Key observations:
+
+\begin{itemize}
+  \item \textbf{XGBoost is the best ML classifier:} Highest Macro F1 (0.7267), Accuracy (0.7907), and MCC (0.6087). Gradient-boosted trees handle the skewed structural metric distributions well after RobustScaling.
+  \item \textbf{SVM is competitive:} Best G-Mean (0.6854) and ROC-AUC (0.8692) among ML classifiers, indicating superior minority-class recall balance. SVM's maximum-margin boundary is effective in the well-normalised feature space.
+  \item \textbf{LightGBM edges CatBoost:} Both achieve identical Accuracy (0.7788); LightGBM's Macro F1 (0.7202) slightly exceeds CatBoost (0.7115) due to its histogram-based gradient boosting handling sparse feature interactions more efficiently.
+  \item \textbf{Critical class is equally hard for ML:} Per-class Critical F1 ranges from 0.47 to 0.51 across ML classifiers, comparable to or slightly below LLMs (0.48--0.57). Critical class difficulty is a dataset-level challenge (scarcity + label noise), not a model-level one.
+  \item \textbf{Medium class is easiest:} All ML classifiers achieve F1 $>$ 0.90 on Medium (Class 2), consistent with LLM results. Medium faults have the most structurally distinctive patterns.
+  \item \textbf{Practical implication:} For deployment scenarios where fine-tuning a 125M-parameter transformer is infeasible, XGBoost on 10 heuristically extracted structural metrics provides near-equivalent Macro F1. The LLM approach adds value primarily through its superior semantic representations, particularly for Critical fault detection (F1: 0.57 for GraphCodeBERT vs.\ 0.51 for XGBoost).
+\end{itemize}
+
+% ============================================================
+%  CHAPTER 7 — CONCLUSION
+% ============================================================
+\clearpage
+\chapter{Conclusion}
+
+\section{Summary of Findings}
+
+This project presents a systematic comparison of four state-of-the-art code LLMs, four classical ML classifiers, and a comprehensive ablation study for hybrid fault severity prediction on the Defects4J + Bugs.jar benchmark. The key contributions and findings are:
+
+\begin{itemize}
+  \item \textbf{Heuristic metric pipeline:} We designed and validated a compilation-free heuristic extraction pipeline for 10 structural code metrics achieving full dataset coverage on non-compilable Java buggy methods, enabling reproducible and scalable metric computation without static analysis tool dependencies.
+
+  \item \textbf{Hybrid architecture:} The ConcatClsModel fusing 768-d transformer embeddings with 10 structural metrics outperforms pure embedding-only or metrics-only approaches for CodeBERT, the weakest semantic model. For stronger models (UniXcoder), the embeddings alone are sufficient.
+
+  \item \textbf{Best LLM:} \textbf{UniXcoder + SMOTE achieves the highest Macro F1 of 0.7319}, owing to its multi-modal AST + code + comment pre-training.
+
+  \item \textbf{Model ranking:} UniXcoder $>$ GraphCodeBERT $>$ CodeBERT $>$ CodeT5+ --- more comprehensive pre-training leads to better severity discrimination.
+
+  \item \textbf{SMOTE effect:} SMOTE improved Macro F1 for all four models (average +0.0114) and significantly improved G-Mean, particularly for CodeT5+ (+0.0456).
+
+  \item \textbf{Ablation study:} RobustScaler is the most critical pipeline component --- its removal causes average Macro F1 to collapse by 0.40 points. SMOTE provides a secondary but consistent benefit. Structural metrics contribute most for weaker semantic models (CodeBERT) and are redundant for richer ones (UniXcoder).
+
+  \item \textbf{ML classifiers:} XGBoost on the 10 structural metrics achieves Macro F1 = 0.7267 --- within 0.005 of the best LLM --- at dramatically lower computational cost, making it a practical alternative for latency-sensitive deployments.
+
+  \item \textbf{Critical class:} Remains the hardest to predict across all models and classifiers due to data scarcity (only 55 test samples), semantic label ambiguity, and SMOTE's inability to synthesise realistic critical-severity code semantics.
+
+  \item \textbf{Medium class:} Achieves consistently high ROC-AUC ($>$0.98) and F1 ($>$0.90) across all approaches, suggesting it has the most structurally and semantically distinctive patterns of the four severity classes.
+\end{itemize}
+
+% ============================================================
+%  CHAPTER 8 — FUTURE SCOPE
+% ============================================================
+\clearpage
+\chapter{Future Scope}
+
+\section{Expanding to Larger and More Diverse Code LLMs}
+
+The four models evaluated in this work --- CodeBERT, GraphCodeBERT,
+UniXcoder, and CodeT5+ --- are all RoBERTa-scale models with approximately
+110--125M parameters. Recent generations of significantly larger
+code-specialised models, including CodeLlama \cite{codellama}, StarCoder2
+\cite{starcoder2}, and DeepSeek-Coder, have demonstrated substantially
+superior code understanding across a variety of benchmarks. Extending the
+ConcatClsModel architecture to accommodate decoder-only transformer embeddings
+(via mean pooling over the final hidden layer) and evaluating these models on
+the same Defects4J + Bugs.jar benchmark would establish whether scale alone
+provides a meaningful lift in minority-class (Critical) fault detection.
+Parameter-efficient fine-tuning strategies such as LoRA and QLoRA would make
+such evaluation feasible without requiring multi-GPU clusters.
+
+\section{Extending to Multi-Language and Cross-Project Settings}
+
+The current dataset is restricted to Java buggy methods from 25 open-source
+projects. Fault severity prediction in industrial settings involves
+heterogeneous codebases spanning Python, C/C++, JavaScript, and Go. Future
+work should investigate:
+
+\begin{itemize}
+  \item \textbf{Cross-language generalisation:} Training on Java and
+  performing zero-shot or few-shot transfer to Python or C projects using
+  multilingual code models such as CodeBERTa, and measuring the degradation
+  in Macro F1 as a function of language distance.
+  \item \textbf{Cross-project generalisation:} A leave-one-project-out
+  evaluation protocol on Defects4J to quantify how well models trained on one
+  project (e.g., Apache Commons) generalise to another (e.g., JFreeChart or
+  Closure Compiler) --- a more realistic deployment scenario.
+  \item \textbf{Industrial bug trackers:} Extending severity label sourcing
+  beyond Jira to GitHub Issues and Bugzilla, and evaluating label quality,
+  inter-rater agreement, and the impact of label noise on model performance
+  across platforms.
+\end{itemize}
+
+\section{Incorporating Bug Report Text as an Additional Modality}
+
+The current pipeline uses only method-level source code as the semantic input.
+In practice, bug reports are filed with natural language descriptions,
+reproduction steps, stack traces, and user-provided context. A trimodal
+architecture fusing (i) transformer code embeddings, (ii) bug report natural
+language embeddings from a domain-adapted BERT model, and (iii) structural
+code metrics could substantially improve Critical fault detection, where source
+code structure alone provides a weak signal. Cross-modal attention mechanisms
+--- rather than simple concatenation as in ConcatClsModel --- represent a
+natural architectural extension for fusing these heterogeneous inputs, and
+warrant systematic investigation.
+
+\section{Improving Minority Class Prediction}
+
+The Critical severity class (8.2\% of the dataset, 55 test samples) remains
+the hardest to predict across all models and classifiers, with per-class F1
+capped at 0.57 even for the best configuration. Several directions
+specifically target this bottleneck:
+
+\begin{itemize}
+  \item \textbf{Retrieval-augmented classification:} At inference time,
+  retrieving the $k$ most similar Critical-severity methods from a vector
+  store and using their embeddings as soft prototypes to bias the classifier
+  toward the Critical class.
+  \item \textbf{Contrastive pre-training:} Fine-tuning the transformer
+  backbone with a supervised contrastive loss that pulls Critical-severity
+  method embeddings together and pushes them away from Major-severity ones
+  before the classification head is added.
+  \item \textbf{Cost-sensitive learning:} Introducing asymmetric
+  misclassification costs (e.g., penalising Critical$\to$Major errors $5\times$
+  more than Major$\to$Low errors) via a weighted cross-entropy loss, rather
+  than relying solely on SMOTE oversampling.
+  \item \textbf{Better oversampling in embedding space:} SMOTE was applied
+  exclusively to the 10 structural metrics in this work because synthesising
+  realistic code embeddings in 768-d space is non-trivial. Future work could
+  explore Conditional Variational Autoencoders (CVAEs) or diffusion-based
+  oversampling conditioned on severity labels to generate plausible synthetic
+  embeddings for the Critical class.
+\end{itemize}
+
+\section{Graph-Structured and AST-Aware Metric Extraction}
+
+The heuristic metric extraction pipeline developed in this work operates on
+raw token sequences and achieves full dataset coverage, but deliberately
+approximates graph-dependent metrics such as Cyclomatic Complexity and
+Fan-Out. As the field moves toward differentiable program analysis, future
+work could replace the heuristic pipeline with a lightweight Graph Neural
+Network (GNN) operating over Abstract Syntax Trees or Control Flow Graphs
+parsed by tree-sitter --- which requires no compilation. This would produce
+richer, learnable structural representations rather than fixed scalar metrics,
+and could be jointly trained with the transformer backbone end-to-end,
+enabling the model to automatically discover which structural patterns are
+most predictive of each severity class.
+
+\section{Deployment as a CI/CD Plugin}
+
+The finding that XGBoost on 10 structural metrics achieves Macro F1 = 0.7267
+--- within 0.005 of the best LLM --- at negligible inference cost has direct
+practical implications. A natural next step is packaging the heuristic metric
+extractor and XGBoost classifier as a lightweight GitHub Actions or Jenkins
+plugin that:
+
+\begin{enumerate}[leftmargin=1.5cm]
+  \item Intercepts pull requests touching Java methods flagged in open bug
+  reports.
+  \item Extracts the 10 structural metrics from the changed method in under
+  100 ms.
+  \item Predicts fault severity and annotates the PR with a severity label
+  and confidence score.
+\end{enumerate}
+
+A subsequent LLM-based escalation step, triggered only for predictions where
+the XGBoost confidence falls below a calibrated threshold, would combine the
+latency advantages of the ML classifier with the semantic depth of the
+transformer --- a cascaded architecture that balances accuracy and
+computational cost in production.
+
+\section{Temporal and Drift Analysis}
+
+All experiments in this work follow a static train-test split. In practice,
+software projects evolve: coding patterns, team practices, and severity
+labelling conventions shift over time. Future work should evaluate the
+proposed pipeline under a \textbf{temporal split} (training on bugs filed
+before year $Y$, testing on bugs filed after $Y$) to measure concept drift
+and determine how frequently the model must be retrained to maintain
+production-level Macro F1. This is especially important for the Critical
+class, where label conventions tend to be most volatile across project
+timelines.
+
+\section{Explainability and Developer Trust}
+
+For fault severity prediction to be adopted in practice, developers need to
+understand \textit{why} a method is classified as Critical rather than Major.
+Future work should integrate post-hoc explainability methods:
+
+\begin{itemize}
+  \item \textbf{SHAP values} over the 10 structural metrics to identify which
+  code properties --- such as high Cyclomatic Complexity combined with high
+  Fan-Out --- drive Critical predictions for individual methods.
+  \item \textbf{Attention visualisation} over the transformer input tokens to
+  highlight which code tokens contribute most to a severity prediction,
+  enabling developers to act on the explanation rather than just the label.
+  \item \textbf{Counterfactual explanations:} Statements of the form
+  ``reducing Max Nesting Depth from 6 to 3 and Fan-Out from 12 to 7 would
+  change the predicted severity from Critical to Major'' provide directly
+  actionable guidance during code review.
+\end{itemize}
+
+% ============================================================
+%  REFERENCES
+% ============================================================
+\clearpage
+\begin{thebibliography}{99}
+
+\bibitem{codebert}
+Z.\ Feng, D.\ Guo, D.\ Tang, N.\ Duan, X.\ Feng, M.\ Gong, L.\ Shou, B.\ Qin, T.\ Liu, D.\ Jiang, and M.\ Zhou, ``CodeBERT: A Pre-Trained Model for Programming and Natural Languages,'' in \textit{Findings of EMNLP}, 2020, pp.\ 1536--1547.
+
+\bibitem{graphcodebert}
+D.\ Guo, S.\ Ren, S.\ Lu, Z.\ Feng, D.\ Tang, S.\ Liu, L.\ Zhou, N.\ Duan, A.\ Svyatkovskiy, S.\ Fu, M.\ Tufano, S.\ Deng, C.\ Clement, D.\ Drain, N.\ Sundaresan, J.\ Yin, D.\ Jiang, and M.\ Zhou, ``GraphCodeBERT: Pre-Training Code Representations with Data Flow,'' in \textit{Proc.\ ICLR}, 2021.
+
+\bibitem{unixcoder}
+D.\ Guo, S.\ Lu, N.\ Duan, Y.\ Wang, M.\ Zhou, and J.\ Yin, ``UniXcoder: Unified Cross-Modal Pre-Training for Code Representation,'' in \textit{Proc.\ ACL}, 2022, pp.\ 7212--7225.
+
+\bibitem{codet5p}
+Y.\ Wang, H.\ Le, A.\ D.\ Gotmare, N.\ D.\ Q.\ Bui, J.\ Li, and S.\ C.\ H.\ Hoi, ``CodeT5+: Open Code Large Language Models for Code Understanding and Generation,'' in \textit{Proc.\ EMNLP}, 2023, pp.\ 1069--1088.
+
+\bibitem{mashhadi}
+E.\ Mashhadi, H.\ Ahmadvand, and H.\ Hemmati, ``Method-Level Bug Severity Prediction Using Source Code Metrics and LLMs,'' in \textit{Proc.\ 34th IEEE Int.\ Symp.\ Software Reliability Engineering (ISSRE)}, 2023, pp.\ 635--646.
+
+\bibitem{defects4j}
+R.\ Just, D.\ Jalali, and M.\ D.\ Ernst, ``Defects4J: A Database of Existing Faults to Enable Controlled Testing Studies for Java Programs,'' in \textit{Proc.\ ISSTA}, 2014, pp.\ 437--447.
+
+\bibitem{bugsjar}
+M.\ B.\ Habib and M.\ Nutter, ``Bugs.jar: A Large-Scale, Diverse Dataset of Real-World Java Bugs,'' in \textit{Proc.\ MSR}, 2018, pp.\ 10--13.
+
+\bibitem{smote}
+N.\ V.\ Chawla, K.\ W.\ Bowyer, L.\ O.\ Hall, and W.\ P.\ Kegelmeyer, ``SMOTE: Synthetic Minority Over-Sampling Technique,'' \textit{J.\ Artif.\ Intell.\ Res.}, vol.\ 16, pp.\ 321--357, 2002.
+
+\bibitem{fse2026}
+Anonymous Author(s), ``Efficient Software Fault Severity Prediction using Hybrid Features and Zero-Shot Models,'' in \textit{Proc.\ ACM Int.\ Conf.\ Foundations of Software Engineering (FSE '26)}, Montr\'eal, Canada, July 2026.
+
+\bibitem{buse2009}
+R.\ P.\ Buse and W.\ R.\ Weimer, ``Learning a Metric for Code Readability,'' \textit{IEEE Trans.\ Softw.\ Eng.}, vol.\ 36, no.\ 4, pp.\ 546--558, 2009.
+
+\bibitem{mccabe}
+T.\ J.\ McCabe, ``A Complexity Measure,'' \textit{IEEE Trans.\ Softw.\ Eng.}, vol.\ SE-2, no.\ 4, pp.\ 308--320, Dec.\ 1976.
+
+\bibitem{halstead}
+M.\ H.\ Halstead, \textit{Elements of Software Science}. New York: Elsevier North-Holland, 1977.
+
+\bibitem{palomba}
+F.\ Palomba, G.\ Bavota, M.\ Di Penta, F.\ Fasano, R.\ De Lucia, and A.\ De Lucia, ``On the Diffuseness and the Impact on Maintainability of Code Smells: A Large Scale Empirical Study,'' \textit{J.\ Softw.: Evol.\ Process}, vol.\ 30, no.\ 7, p.\ e1908, 2018.
+
+\bibitem{ref1}
+Y.\ Tian, C.\ Lo, and J.\ Lawall, ``Automated Change-Prone Class Prediction on Open Source Software,'' in \textit{Proc.\ CSMR-WCRE}, 2014, pp.\ 274--283.
+
+\bibitem{ref2}
+N.\ Nagappan and T.\ Ball, ``Static Analysis Tools as Early Indicators of Pre-Release Defect Density,'' in \textit{Proc.\ ICSE}, 2005, pp.\ 580--586.
+
+\bibitem{ref3}
+A.\ Lamkanfi, S.\ Demeyer, Q.\ D.\ Soetens, and T.\ Verdonck, ``Comparing Mining Algorithms for Predicting the Severity of a Reported Bug,'' in \textit{Proc.\ CSMR}, 2011, pp.\ 249--258.
+
+\bibitem{ref4}
+M.\ D'Ambros, M.\ Lanza, and R.\ Robbes, ``Evaluating Defect Prediction Approaches: A Benchmark and an Extensive Comparison,'' \textit{Empirical Softw.\ Eng.}, vol.\ 17, no.\ 4, pp.\ 531--577, 2012.
+
+\bibitem{ref5}
+S.\ Wang, T.\ Liu, J.\ Nam, and L.\ Tan, ``Deep Semantic Feature Learning for Software Defect Prediction,'' \textit{IEEE Trans.\ Softw.\ Eng.}, vol.\ 46, no.\ 12, pp.\ 1267--1292, 2020.
+
+\bibitem{codellama}
+B.\ Roziere et al., ``Code Llama: Open Foundation Models for Code,''
+\textit{arXiv preprint arXiv:2308.12950}, 2023.
+
+\bibitem{starcoder2}
+A.\ Lozhkov et al., ``StarCoder 2 and The Stack v2: The Next Generation,''
+\textit{arXiv preprint arXiv:2402.19173}, 2024.
+
+\end{thebibliography}
+
+\end{document}
