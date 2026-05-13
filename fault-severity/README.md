@@ -122,11 +122,3 @@ Detailed results are available in the `results/` directory in JSON format.
 ## License
 
 Please refer to the original dataset repository for licensing information.
-
-## Citation
-
-If you use this dataset or project, please cite the original work:
-
-```
-https://github.com/EhsanMashhadi/ISSRE2023-BugSeverityPrediction
-```
